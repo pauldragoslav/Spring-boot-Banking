@@ -13,6 +13,9 @@ docker build -t "spring-boot:banking" .
 docker run -p 8080:8080 spring-boot:banking
 ```
 
+## Testing
+1. Import the Postman collection file into the application or copy the request body from there
+
 ### Extensions
 1. Use of persisted database
 2. Use of asynchronous programming backed by message queue for transactions
