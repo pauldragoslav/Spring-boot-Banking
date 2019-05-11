@@ -3,7 +3,7 @@ Example project demonstrating the use of Java and Spring-boot to build a microse
 
 ## Running locally
 ```
-.mvn clean package
+.mvnw clean package
 java -jar target\Banking-0.0.1.jar
 ```
 
