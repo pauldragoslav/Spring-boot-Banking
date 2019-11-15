@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:jdk-11.0.5_10
+FROM adoptopenjdk/openjdk11:jdk-11.0.4_11
 VOLUME /tmp
 ARG JAR_FILE
 COPY target/Banking-*.jar app.jar
