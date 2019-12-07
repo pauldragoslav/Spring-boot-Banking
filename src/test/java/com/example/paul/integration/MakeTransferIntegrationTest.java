@@ -4,23 +4,23 @@ import com.example.paul.controllers.TransactionRestController;
 import com.example.paul.utils.AccountInput;
 import com.example.paul.utils.TransactionInput;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(value = "local")
-public class MakeTransferIntegrationTest {
+class MakeTransferIntegrationTest {
 
     @Autowired
     private TransactionRestController transactionRestController;
 
     @Test
-    public void givenTransactionDetails_whenMakeTransaction_thenVerifyTransactionIsProcessed() {
+    void givenTransactionDetails_whenMakeTransaction_thenVerifyTransactionIsProcessed() {
         // given
         var sourceAccount = new AccountInput();
         sourceAccount.setSortCode("53-68-92");

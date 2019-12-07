@@ -4,23 +4,23 @@ import com.example.paul.controllers.AccountRestController;
 import com.example.paul.models.Account;
 import com.example.paul.utils.AccountInput;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(value = "local")
-public class CheckBalanceIntegrationTest {
+class CheckBalanceIntegrationTest {
 
     @Autowired
     private AccountRestController accountRestController;
 
     @Test
-    public void givenAccountDetails_whenCheckingBalance_thenVerifyAccountCorrect() {
+    void givenAccountDetails_whenCheckingBalance_thenVerifyAccountCorrect() {
         // given
         var input = new AccountInput();
         input.setSortCode("53-68-92");

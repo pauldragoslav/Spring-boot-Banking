@@ -4,7 +4,7 @@ Example project demonstrating the use of Java and Spring-boot to build a microse
 ## Running locally
 ```
 .mvnw clean package
-java -jar target\Banking-0.0.1.jar
+java -jar target/Banking-0.0.1.jar
 ```
 
 ## Running on Docker

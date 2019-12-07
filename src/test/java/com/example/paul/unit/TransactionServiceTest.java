@@ -7,20 +7,20 @@ import com.example.paul.services.TransactionService;
 import com.example.paul.utils.AccountInput;
 import com.example.paul.utils.TransactionInput;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-@RunWith(SpringRunner.class)
-public class TransactionServiceTest {
+@ExtendWith(SpringExtension.class)
+class TransactionServiceTest {
 
     @TestConfiguration
     static class TransactionServiceTestContextConfiguration {
@@ -40,8 +40,8 @@ public class TransactionServiceTest {
     @MockBean
     private TransactionRepository transactionRepository;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         var sourceAccount = new Account(1L, "53-68-92", "78901234", 458.1, "Some Bank", "John");
         var targetAccount = new Account(2L, "67-41-18", "48573590", 64.9, "Some Other Bank", "Major");
 
@@ -52,7 +52,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    public void whenTransactionDetails_thenTransferShouldBeDenied() {
+    void whenTransactionDetails_thenTransferShouldBeDenied() {
         var sourceAccount = new AccountInput();
         sourceAccount.setSortCode("53-68-92");
         sourceAccount.setAccountNumber("78901234");
@@ -73,7 +73,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    public void whenTransactionDetailsAndAmountTooLarge_thenTransferShouldBeDenied() {
+    void whenTransactionDetailsAndAmountTooLarge_thenTransferShouldBeDenied() {
         var sourceAccount = new AccountInput();
         sourceAccount.setSortCode("53-68-92");
         sourceAccount.setAccountNumber("78901234");

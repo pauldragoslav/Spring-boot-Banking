@@ -5,20 +5,20 @@ import com.example.paul.repositories.AccountRepository;
 import com.example.paul.repositories.TransactionRepository;
 import com.example.paul.services.AccountService;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
-@RunWith(SpringRunner.class)
-public class AccountServiceTest {
+@ExtendWith(SpringExtension.class)
+class AccountServiceTest {
 
     @TestConfiguration
     static class AccountServiceTestContextConfiguration {
@@ -38,8 +38,8 @@ public class AccountServiceTest {
     @MockBean
     private TransactionRepository transactionRepository;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         var account = new Account(1L, "53-68-92", "78901234", 10.1, "Some Bank", "John");
 
         Mockito.when(accountRepository.findBySortCodeAndAccountNumber("53-68-92", "78901234"))
@@ -47,7 +47,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void whenAccountDetails_thenAccountShouldBeFound() {
+    void whenAccountDetails_thenAccountShouldBeFound() {
         var account = accountService.getAccount("53-68-92", "78901234");
 
         Assertions.assertThat(account.getOwnerName()).isEqualTo("John");

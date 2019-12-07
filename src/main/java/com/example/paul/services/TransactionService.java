@@ -46,12 +46,18 @@ public class TransactionService {
                 transaction.setLatitude(transactionInput.getLatitude());
                 transaction.setLongitude(transactionInput.getLongitude());
 
+                updateAccountBalance(sourceAccount.get(), transactionInput.getAmount());
                 transactionRepository.save(transaction);
 
                 return true;
             }
         }
         return false;
+    }
+
+    private void updateAccountBalance(Account account, double amount) {
+        account.setCurrentBalance((account.getCurrentBalance() - amount));
+        accountRepository.save(account);
     }
 
     // TODO support overdrafts or credit account
