@@ -1,0 +1,19 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set the JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 14
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
