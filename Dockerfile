@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk14:jdk-14_36-alpine
+FROM eclipse-temurin:17.0.1_12-jre-alpine
 VOLUME /tmp
 ARG JAR_FILE
 COPY target/Banking-*.jar app.jar
