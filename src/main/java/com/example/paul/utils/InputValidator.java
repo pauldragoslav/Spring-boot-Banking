@@ -4,13 +4,17 @@ import java.util.regex.Pattern;
 
 public class InputValidator {
 
-    private static final Pattern sortCodePattern = Pattern.compile("^[0-9]{2}-[0-9]{2}-[0-9]{2}$");
+    static final Pattern sortCodePattern = Pattern.compile("^[0-9]{2}-[0-9]{2}-[0-9]{2}$");
 
-    private static final Pattern accountNumberPattern = Pattern.compile("^[0-9]{8}$");
+    static final Pattern accountNumberPattern = Pattern.compile("^[0-9]{8}$");
 
     public static boolean isSearchCriteriaValid(AccountInput accountInput) {
         return sortCodePattern.matcher(accountInput.getSortCode()).find() &&
                 accountNumberPattern.matcher(accountInput.getAccountNumber()).find();
+    }
+
+    public static boolean isCreateAccountCriteriaValid(CreateAccountInput createAccountInput) {
+        return (!createAccountInput.getBankName().isBlank() && !createAccountInput.getOwnerName().isBlank());
     }
 
     public static boolean isSearchTransactionValid(TransactionInput transactionInput) {

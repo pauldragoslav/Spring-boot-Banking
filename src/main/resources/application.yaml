@@ -12,6 +12,6 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
 server:
   port: 8080

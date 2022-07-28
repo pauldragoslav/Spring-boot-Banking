@@ -3,6 +3,7 @@ package com.example.paul.controllers;
 import com.example.paul.models.Account;
 import com.example.paul.services.AccountService;
 import com.example.paul.utils.AccountInput;
+import com.example.paul.utils.CreateAccountInput;
 import com.example.paul.utils.InputValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class AccountRestController {
     private static final String NO_ACCOUNT_FOUND =
             "Unable to find an account matching this sort code and account number";
 
+    private static final String CREATE_ACCOUNT_FAILED =
+            "Error happened during creating new account";
+
     private final AccountService accountService;
 
     @Autowired
@@ -54,6 +58,31 @@ public class AccountRestController {
             // Return the account details, or warn that no account was found for given input
             if (account == null) {
                 return new ResponseEntity<>(NO_ACCOUNT_FOUND, HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(account, HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(INVALID_SEARCH_CRITERIA, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @PutMapping(value = "/accounts",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createAccount(
+            @Valid @RequestBody CreateAccountInput createAccountInput) {
+        LOGGER.debug("Triggered AccountRestController.accountInput");
+
+        // Validate input
+        if (InputValidator.isCreateAccountCriteriaValid(createAccountInput)) {
+            // Attempt to retrieve the account information
+            Account account = accountService.createAccount(
+                    createAccountInput.getBankName(), createAccountInput.getOwnerName());
+
+            // Return the account details, or warn that no account was found for given input
+            if (account == null) {
+                return new ResponseEntity<>(CREATE_ACCOUNT_FAILED, HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<>(account, HttpStatus.OK);
             }
