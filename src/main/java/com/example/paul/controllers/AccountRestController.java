@@ -26,9 +26,6 @@ public class AccountRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountRestController.class);
 
-    private static final String CREATE_ACCOUNT_FAILED =
-            "Error happened during creating new account";
-
     private final AccountService accountService;
 
     @Autowired
@@ -77,7 +74,7 @@ public class AccountRestController {
 
             // Return the account details, or warn that no account was found for given input
             if (account == null) {
-                return new ResponseEntity<>(CREATE_ACCOUNT_FAILED, HttpStatus.OK);
+                return new ResponseEntity<>(constants.CREATE_ACCOUNT_FAILED, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(account, HttpStatus.OK);
             }

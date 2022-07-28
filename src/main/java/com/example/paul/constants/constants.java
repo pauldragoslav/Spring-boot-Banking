@@ -22,5 +22,6 @@ public class constants {
 
     public static final String INVALID_TRANSACTION =
             "Account information is invalid or transaction has been denied for your protection. Please try again.";
+    public static final String CREATE_ACCOUNT_FAILED =
+            "Error happened during creating new account";
 }
-
