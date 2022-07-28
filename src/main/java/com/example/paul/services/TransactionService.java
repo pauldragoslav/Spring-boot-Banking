@@ -55,13 +55,13 @@ public class TransactionService {
         return false;
     }
 
-    private void updateAccountBalance(Account account, double amount) {
+     public void updateAccountBalance(Account account, double amount) {
         account.setCurrentBalance((account.getCurrentBalance() - amount));
         accountRepository.save(account);
     }
 
     // TODO support overdrafts or credit account
-    private boolean isAmountAvailable(double amount, double accountBalance) {
+    public boolean isAmountAvailable(double amount, double accountBalance) {
         return (accountBalance - amount) > 0;
     }
 }

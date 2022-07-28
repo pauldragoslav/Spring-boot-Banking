@@ -1,9 +1,13 @@
 package com.example.paul.utils;
 
+import com.example.paul.constants.constants;
 import com.mifmif.common.regex.Generex;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
+
+import static com.example.paul.constants.constants.ACCOUNT_NUMBER_PATTERN_STRING;
+import static com.example.paul.constants.constants.SORT_CODE_PATTERN_STRING;
 
 public class CreateAccountInput {
 
@@ -30,16 +34,6 @@ public class CreateAccountInput {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
-    }
-
-    public String generateSortCode() {
-        Generex generex = new Generex(InputValidator.sortCodePattern.toString());
-        return generex.getMatchedString(2);
-    }
-
-    public String generateAccountNumber() {
-        Generex generex = new Generex(InputValidator.accountNumberPattern.toString());
-        return generex.getMatchedString(2);
     }
 
     @Override
