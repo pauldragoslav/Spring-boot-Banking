@@ -1,12 +1,10 @@
 package com.example.paul.controllers;
 
+import com.example.paul.constants.ACTION;
 import com.example.paul.models.Account;
 import com.example.paul.services.AccountService;
 import com.example.paul.services.TransactionService;
-import com.example.paul.utils.AccountInput;
-import com.example.paul.utils.InputValidator;
-import com.example.paul.utils.TransactionInput;
-import com.example.paul.utils.WithdrawInput;
+import com.example.paul.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static com.example.paul.constants.constants.*;
 
@@ -29,9 +26,6 @@ import static com.example.paul.constants.constants.*;
 public class TransactionRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionRestController.class);
-
-    private static final String INVALID_TRANSACTION =
-            "Account information is invalid or transaction has been denied for your protection. Please try again.";
 
     private final AccountService accountService;
     private final TransactionService transactionService;
@@ -71,13 +65,38 @@ public class TransactionRestController {
 
             // Return the account details, or warn that no account was found for given input
             if (account == null) {
-                return new ResponseEntity<>(NO_ACCOUNT_FOUND, HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(NO_ACCOUNT_FOUND, HttpStatus.OK);
             } else {
                 if (transactionService.isAmountAvailable(withdrawInput.getAmount(), account.getCurrentBalance())) {
-                    transactionService.updateAccountBalance(account, withdrawInput.getAmount());
-                    return new ResponseEntity<>(account, HttpStatus.OK);
+                    transactionService.updateAccountBalance(account, withdrawInput.getAmount(), ACTION.WITHDRAW);
+                    return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
                 }
-                return new ResponseEntity<>(INSUFFICIENT_ACCOUNT_BALANCE, HttpStatus.NOT_ACCEPTABLE);
+                return new ResponseEntity<>(INSUFFICIENT_ACCOUNT_BALANCE, HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(INVALID_SEARCH_CRITERIA, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @PostMapping(value = "/deposit",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deposit(
+            @Valid @RequestBody DepositInput depositInput) {
+        LOGGER.debug("Triggered AccountRestController.depositInput");
+
+        // Validate input
+        if (InputValidator.isAccountNoValid(depositInput.getTargetAccountNo())) {
+            // Attempt to retrieve the account information
+            Account account = accountService.getAccount(depositInput.getTargetAccountNo());
+
+            // Return the account details, or warn that no account was found for given input
+            if (account == null) {
+                return new ResponseEntity<>(NO_ACCOUNT_FOUND, HttpStatus.OK);
+            } else {
+                transactionService.updateAccountBalance(account, depositInput.getAmount(), ACTION.DEPOSIT);
+                return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
             }
         } else {
             return new ResponseEntity<>(INVALID_SEARCH_CRITERIA, HttpStatus.BAD_REQUEST);

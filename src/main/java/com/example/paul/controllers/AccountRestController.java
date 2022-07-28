@@ -52,7 +52,7 @@ public class AccountRestController {
 
             // Return the account details, or warn that no account was found for given input
             if (account == null) {
-                return new ResponseEntity<>(constants.NO_ACCOUNT_FOUND, HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(constants.NO_ACCOUNT_FOUND, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(account, HttpStatus.OK);
             }
@@ -77,7 +77,7 @@ public class AccountRestController {
 
             // Return the account details, or warn that no account was found for given input
             if (account == null) {
-                return new ResponseEntity<>(CREATE_ACCOUNT_FAILED, HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(CREATE_ACCOUNT_FAILED, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(account, HttpStatus.OK);
             }

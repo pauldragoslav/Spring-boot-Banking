@@ -29,6 +29,13 @@ public class AccountService {
         return account.orElse(null);
     }
 
+    public Account getAccount(String accountNumber) {
+        Optional<Account> account = accountRepository
+                .findByAccountNumber(accountNumber);
+
+        return account.orElse(null);
+    }
+
     public Account createAccount(String bankName, String ownerName) {
         CodeGenerator codeGenerator = new CodeGenerator();
         Account newAccount = new Account(bankName, ownerName, codeGenerator.generateSortCode(), codeGenerator.generateAccountNumber(), 0.00);

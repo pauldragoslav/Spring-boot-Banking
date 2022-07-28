@@ -9,6 +9,10 @@ public class InputValidator {
                 constants.ACCOUNT_NUMBER_PATTERN.matcher(accountInput.getAccountNumber()).find();
     }
 
+    public static boolean isAccountNoValid(String accountNo) {
+        return constants.ACCOUNT_NUMBER_PATTERN.matcher(accountNo).find();
+    }
+
     public static boolean isCreateAccountCriteriaValid(CreateAccountInput createAccountInput) {
         return (!createAccountInput.getBankName().isBlank() && !createAccountInput.getOwnerName().isBlank());
     }
