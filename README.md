@@ -3,7 +3,7 @@ Example project demonstrating the use of Java and Spring-boot to build a microse
 
 ## Running locally
 ```
-mvn clean install -DskipTests=true
+./mvnw clean install -DskipTests=true
 ```
 
 ```
