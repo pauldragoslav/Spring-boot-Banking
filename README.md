@@ -13,6 +13,9 @@ java -jar target/Banking-0.0.1.jar
 ## Running on Docker
 ```
 docker build -t "spring-boot:banking" .
+```
+
+```
 docker run -p 8080:8080 spring-boot:banking
 ```
 
