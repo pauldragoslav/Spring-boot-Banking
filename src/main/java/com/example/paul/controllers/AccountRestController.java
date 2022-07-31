@@ -1,8 +1,10 @@
 package com.example.paul.controllers;
 
+import com.example.paul.constants.constants;
 import com.example.paul.models.Account;
 import com.example.paul.services.AccountService;
 import com.example.paul.utils.AccountInput;
+import com.example.paul.utils.CreateAccountInput;
 import com.example.paul.utils.InputValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +25,6 @@ import java.util.Map;
 public class AccountRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountRestController.class);
-
-    private static final String INVALID_SEARCH_CRITERIA =
-            "The provided sort code or account number did not match the expected format";
-
-    private static final String NO_ACCOUNT_FOUND =
-            "Unable to find an account matching this sort code and account number";
 
     private final AccountService accountService;
 
@@ -53,12 +49,37 @@ public class AccountRestController {
 
             // Return the account details, or warn that no account was found for given input
             if (account == null) {
-                return new ResponseEntity<>(NO_ACCOUNT_FOUND, HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(constants.NO_ACCOUNT_FOUND, HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(account, HttpStatus.OK);
             }
         } else {
-            return new ResponseEntity<>(INVALID_SEARCH_CRITERIA, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(constants.INVALID_SEARCH_CRITERIA, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @PutMapping(value = "/accounts",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createAccount(
+            @Valid @RequestBody CreateAccountInput createAccountInput) {
+        LOGGER.debug("Triggered AccountRestController.createAccountInput");
+
+        // Validate input
+        if (InputValidator.isCreateAccountCriteriaValid(createAccountInput)) {
+            // Attempt to retrieve the account information
+            Account account = accountService.createAccount(
+                    createAccountInput.getBankName(), createAccountInput.getOwnerName());
+
+            // Return the account details, or warn that no account was found for given input
+            if (account == null) {
+                return new ResponseEntity<>(constants.CREATE_ACCOUNT_FAILED, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(account, HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(constants.INVALID_SEARCH_CRITERIA, HttpStatus.BAD_REQUEST);
         }
     }
 

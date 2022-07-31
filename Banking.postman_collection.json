@@ -1,14 +1,14 @@
 {
 	"info": {
-		"_postman_id": "527d1a6d-ae07-4484-947b-e7f5501c1c6b",
+		"_postman_id": "485cda16-0d43-4aa6-ac55-116fb41d8f17",
 		"name": "Banking",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Account Balance",
+			"name": "Create Account",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sortCode\": \"53-68-92\",\n\t\"accountNumber\": \"73084635\"\n}\n\n"
+					"raw": "{\n\t\"bankName\": \"Bank of Ceyloan\",\n\t\"ownerName\": \"Nayananga Muhandiram\"\n}\n"
 				},
 				"url": {
 					"raw": "localhost:8080/api/v1/accounts",
@@ -62,6 +62,99 @@
 						"api",
 						"v1",
 						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check Balance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sortCode\": \"35-16-67\",\n\t\"accountNumber\": \"95753174\"\n}\n"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/accounts",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdraw",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sortCode\": \"35-16-67\",\n\t\"accountNumber\": \"95753174\",\n    \"amount\": 100.00\n}\n"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/withdraw",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"targetAccountNo\": \"95753174\",\n    \"amount\": 1000.00\n}\n"
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/deposit",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"deposit"
 					]
 				}
 			},

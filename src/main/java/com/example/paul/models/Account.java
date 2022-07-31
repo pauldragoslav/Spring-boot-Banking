@@ -1,6 +1,7 @@
 package com.example.paul.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 @Table(name = "account", schema = "online_bank")
 public class Account {
 
-    @Id
+    @Id @GeneratedValue
     private long id;
 
     private String sortCode;
@@ -27,6 +28,13 @@ public class Account {
     private transient List<Transaction> transactions;
 
     protected Account() {}
+    public Account(String bankName, String ownerName, String generateSortCode, String generateAccountNumber, double currentBalance) {
+        this.sortCode = generateSortCode;
+        this.accountNumber = generateAccountNumber;
+        this.currentBalance = currentBalance;
+        this.bankName = bankName;
+        this.ownerName = ownerName;
+    }
     public Account(long id, String sortCode, String accountNumber, double currentBalance, String bankName, String ownerName) {
         this.id = id;
         this.sortCode = sortCode;
@@ -35,6 +43,7 @@ public class Account {
         this.bankName = bankName;
         this.ownerName = ownerName;
     }
+
     public Account(long id, String sortCode, String accountNumber, double currentBalance, String bankName, String ownerName, List<Transaction> transactions) {
         this.id = id;
         this.sortCode = sortCode;

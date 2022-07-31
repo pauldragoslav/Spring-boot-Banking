@@ -1,16 +1,20 @@
 package com.example.paul.utils;
 
-import java.util.regex.Pattern;
+import com.example.paul.constants.constants;
 
 public class InputValidator {
 
-    private static final Pattern sortCodePattern = Pattern.compile("^[0-9]{2}-[0-9]{2}-[0-9]{2}$");
-
-    private static final Pattern accountNumberPattern = Pattern.compile("^[0-9]{8}$");
-
     public static boolean isSearchCriteriaValid(AccountInput accountInput) {
-        return sortCodePattern.matcher(accountInput.getSortCode()).find() &&
-                accountNumberPattern.matcher(accountInput.getAccountNumber()).find();
+        return constants.SORT_CODE_PATTERN.matcher(accountInput.getSortCode()).find() &&
+                constants.ACCOUNT_NUMBER_PATTERN.matcher(accountInput.getAccountNumber()).find();
+    }
+
+    public static boolean isAccountNoValid(String accountNo) {
+        return constants.ACCOUNT_NUMBER_PATTERN.matcher(accountNo).find();
+    }
+
+    public static boolean isCreateAccountCriteriaValid(CreateAccountInput createAccountInput) {
+        return (!createAccountInput.getBankName().isBlank() && !createAccountInput.getOwnerName().isBlank());
     }
 
     public static boolean isSearchTransactionValid(TransactionInput transactionInput) {
