@@ -4,7 +4,6 @@ import com.example.paul.models.Account;
 import com.example.paul.repositories.AccountRepository;
 import com.example.paul.repositories.TransactionRepository;
 import com.example.paul.utils.CodeGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,11 +11,14 @@ import java.util.Optional;
 @Service
 public class AccountService {
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    public AccountService(AccountRepository accountRepository,
+                          TransactionRepository transactionRepository) {
+        this.accountRepository = accountRepository;
+        this.transactionRepository = transactionRepository;
+    }
 
     public Account getAccount(String sortCode, String accountNumber) {
         Optional<Account> account = accountRepository
